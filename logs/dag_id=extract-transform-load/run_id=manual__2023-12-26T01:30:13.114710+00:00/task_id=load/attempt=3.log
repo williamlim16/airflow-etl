@@ -1,0 +1,30 @@
+[2023-12-26T02:10:01.975+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: extract-transform-load.load manual__2023-12-26T01:30:13.114710+00:00 [queued]>
+[2023-12-26T02:10:01.982+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: extract-transform-load.load manual__2023-12-26T01:30:13.114710+00:00 [queued]>
+[2023-12-26T02:10:01.982+0000] {taskinstance.py:2171} INFO - Starting attempt 3 of 6
+[2023-12-26T02:10:01.989+0000] {taskinstance.py:2192} INFO - Executing <Task(_PythonDecoratedOperator): load> on 2023-12-26 01:30:13.114710+00:00
+[2023-12-26T02:10:01.996+0000] {standard_task_runner.py:60} INFO - Started process 717 to run task
+[2023-12-26T02:10:02.000+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'extract-transform-load', 'load', 'manual__2023-12-26T01:30:13.114710+00:00', '--job-id', '198', '--raw', '--subdir', 'DAGS_FOLDER/api.py', '--cfg-path', '/tmp/tmp78to0klk']
+[2023-12-26T02:10:02.002+0000] {standard_task_runner.py:88} INFO - Job 198: Subtask load
+[2023-12-26T02:10:02.063+0000] {task_command.py:423} INFO - Running <TaskInstance: extract-transform-load.load manual__2023-12-26T01:30:13.114710+00:00 [running]> on host 023f8da17198
+[2023-12-26T02:10:02.332+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='william' AIRFLOW_CTX_DAG_ID='extract-transform-load' AIRFLOW_CTX_TASK_ID='load' AIRFLOW_CTX_EXECUTION_DATE='2023-12-26T01:30:13.114710+00:00' AIRFLOW_CTX_TRY_NUMBER='3' AIRFLOW_CTX_DAG_RUN_ID='manual__2023-12-26T01:30:13.114710+00:00'
+[2023-12-26T02:10:02.351+0000] {taskinstance.py:2699} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/decorators/base.py", line 242, in execute
+    return_value = super().execute(context)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/api.py", line 46, in load
+    cursor.execute(
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+DETAIL:  Key (typname, typnamespace)=(sales, 2200) already exists.
+
+[2023-12-26T02:10:02.367+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=extract-transform-load, task_id=load, execution_date=20231226T013013, start_date=20231226T021001, end_date=20231226T021002
+[2023-12-26T02:10:02.373+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 198 for task load (duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+DETAIL:  Key (typname, typnamespace)=(sales, 2200) already exists.
+; 717)
+[2023-12-26T02:10:02.415+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2023-12-26T02:10:02.427+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check
