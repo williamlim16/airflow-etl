@@ -41,7 +41,7 @@ def extranct_transform_load_demo():
     cursor = connection.cursor()
     cursor.execute(
         """
-        DROP TABLE IF EXISTS sales
+        DROP TABLE IF EXISTS sales CASCADE;
         """)
     connection.commit()
     cursor.execute(
@@ -82,6 +82,14 @@ def extranct_transform_load_demo():
         SELECT product_id, product_name, actual_price FROM sales
         ORDER BY actual_price DESC
         LIMIT 5;
+        """)
+    connection.commit()
+
+    cursor.execute(
+        """
+        CREATE MATERIALIZED VIEW average_discount
+        AS
+        SELECT AVG(discounted_price) FROM sales;
         """)
     connection.commit()
 
