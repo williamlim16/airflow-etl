@@ -77,12 +77,28 @@ def extranct_transform_load_demo():
 
     cursor.execute(
         """
+        CREATE MATERIALIZED VIEW average_sales
+        AS
+        SELECT AVG(actual_price) from sales;
+        """)
+    connection.commit()
+
+    cursor.execute(
+        """
         CREATE MATERIALIZED VIEW top5_expensive
         AS
         SELECT product_id, product_name, actual_price FROM sales
         ORDER BY actual_price DESC
         LIMIT 5;
         """)
+    connection.commit()
+
+    cursor.execute(
+          """
+          CREATE MATERIALIZED VIEW total_discount
+          AS
+          SELECT sum(discounted_price) from sales;
+          """)
     connection.commit()
 
     cursor.execute(
